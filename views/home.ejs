@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
+    <style>
+      body {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        background-size: 400% 400%;
+        animation: flowBg 2s ease infinite;
+      }
+
+      @keyframes flowBg {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    </style>
+  </head>
+
+  <body class="text-white font-sans min-h-screen flex flex-col p-6">
+    <!-- Top Bar -->
+    <div class="flex justify-between items-center mb-6">
+      <button onclick="showpopup()" class="bg-white/10 backdrop-blur hover:bg-white/20 text-white px-5 py-2 rounded-xl font-semibold transition-all duration-300">
+        <i class="ri-upload-cloud-line mr-2"></i> Upload File
+      </button>
+
+      <a href="/user/logout" class="bg-red-500 hover:bg-red-600 px-5 py-2 rounded-xl font-semibold transition-all duration-300">
+        <i class="ri-logout-box-r-line mr-2"></i> Logout
+      </a>
+    </div>
+
+    <!-- Upload Popup -->
+    <div class="pop hidden fixed inset-0 z-50 backdrop-blur-sm bg-black/40 flex items-center justify-center transition-all duration-300">
+      <form action="/upload" method="post" enctype="multipart/form-data" class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-md relative">
+        <!-- Close Button -->
+        <button type="button" onclick="hidePopUp()" class="absolute top-4 right-4 text-white hover:text-red-400 transition-all">
+          <i class="ri-close-line text-2xl"></i>
+        </button>
+
+        <label for="dropzone-file" class="cursor-pointer flex flex-col items-center justify-center w-full h-52 border-2 border-dashed border-white/30 rounded-xl hover:bg-white/5 transition-all duration-300">
+          <div class="flex flex-col items-center justify-center">
+            <i class="ri-upload-2-line text-4xl mb-3 text-white/70"></i>
+            <p class="text-sm">Click to upload or drag & drop</p>
+            <p class="text-xs text-white/40 mt-1">Max size: 800x400 | JPG, PNG, GIF</p>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" name="file" required />
+        </label>
+
+        <button type="submit" class="mt-6 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 rounded-xl transition">
+          <i class="ri-upload-line mr-2"></i> Upload File
+        </button>
+      </form>
+    </div>
+
+    <!-- File List -->
+    <div class="files mt-6 grid gap-3">
+      <% if (files && files.length > 0) { %>
+        <% files.forEach((file) => { %>
+          <div class="p-4 bg-white/10 backdrop-blur rounded-xl flex justify-between items-center hover:bg-white/20 transition-all duration-300">
+            <div class="flex items-center gap-3">
+              <i class="ri-file-3-line text-white/80 text-xl"></i>
+              <h1 class="text-white font-medium"><%= file.originalname %></h1>
+            </div>
+            <div class="flex items-center gap-4">
+  <!-- Download Button -->
+      <a href="/download/<%= encodeURIComponent(file.public_id) %>" class="text-white hover:text-green-400 text-xl transition">
+          <i class="ri-download-line"></i>
+      </a>
+      <form action="/delete/<%= encodeURIComponent(file.public_id) %>" method="POST" onsubmit="return confirm('Are you sure?')" class="inline">
+  <button type="submit" class="text-white hover:text-red-400 text-xl transition">
+    <i class="ri-delete-bin-line"></i>
+  </button>
+</form>
+
+
+        </div>
+
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p class="text-white/70 text-center">No files uploaded yet.</p>
+      <% } %>
+    </div>
+
+    <script>
+      function showpopup() {
+        document.querySelector('.pop').classList.remove('hidden');
+      }
+
+      function hidePopUp() {
+        document.querySelector('.pop').classList.add('hidden');
+      }
+    </script>
+  </body>
+</html>

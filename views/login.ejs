@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              primary: '#6366f1',
+              secondary: '#8b5cf6',
+            },
+          },
+        },
+      };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        animation: bgMove 15s ease infinite;
+      }
+
+      @keyframes bgMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex items-center justify-center font-sans bg-cover bg-no-repeat text-white">
+    <div class="bg-white/10 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.2)] rounded-3xl px-10 py-12 w-full max-w-md transition-all duration-700 hover:scale-[1.02]">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">Welcome Back</h1>
+        <p class="text-sm text-gray-300">Login to continue</p>
+      </div>
+
+      <form action="/user/login" method="POST" class="space-y-6">
+        <div class="transition-all duration-300">
+          <label for="username" class="block text-sm font-medium text-white mb-1">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="e.g. yuvraj007"
+            class="w-full px-4 py-3 border border-white/30 rounded-xl text-sm bg-white/10 text-white placeholder-gray-300 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+          />
+        </div>
+
+        <div class="transition-all duration-300">
+          <label for="password" class="block text-sm font-medium text-white mb-1">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="••••••••"
+            class="w-full px-4 py-3 border border-white/30 rounded-xl text-sm bg-white/10 text-white placeholder-gray-300 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-white/50 transition-all"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full py-3 bg-gradient-to-r from-primary to-secondary hover:from-indigo-500 hover:to-purple-500 transition-all duration-300 text-white font-semibold rounded-xl shadow-lg transform hover:-translate-y-0.5"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <p class="text-sm text-center text-gray-300 mt-6">
+        Don’t have an account?
+        <a href="/user/register" class="text-white font-semibold hover:underline">Create one</a>
+      </p>
+    </div>
+  </body>
+</html>
